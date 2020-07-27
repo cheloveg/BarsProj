@@ -10,13 +10,13 @@ javafx{
 }
 jlink{
     launcher {
-        name = 'segnorKopilkin'
+        name = 'barsProj'
     }
 }
 group 'BarsProj'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 12
 
 repositories {
     mavenCentral()
@@ -27,5 +27,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 }
 
-mainClassName = "$moduleName/code.Main"
+mainClassName = "code.Main"
 compileJava.options.encoding = 'UTF-8'
