@@ -1,33 +1,50 @@
 package code;
 
+import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class Cookies {
-    private ArrayList<String> listOfCookies = new ArrayList<>();
+    static final String COOKIES_HEADER = "Set-Cookie";
+    static CookieManager cookieManager = new CookieManager();
 
-    public Cookies(HttpURLConnection connection) {
-        catchCookies(connection);
+    public void catchCookies(HttpURLConnection connection) {
+        Map<String, List<String>> headerFields = connection.getHeaderFields();
+        List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+
+        if (cookiesHeader != null) {
+            for (String cookie : cookiesHeader) {
+                cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+            }
+        }
     }
 
-    private void catchCookies(HttpURLConnection connection) {
-        for (int i = 0; ; i++) {
-            String headerName = connection.getHeaderField(i);
-            String headerValue = connection.getHeaderFieldKey(i);
+    public void imitationCatchCookies(String[] cookies){
+        for (String cookie:
+             cookies) {
+            cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+        }
+    }
 
-            if (headerName != null && headerValue != null) {
-                if ("Set-Cookie".equalsIgnoreCase(headerName)) {
-                    String[] fields = headerValue.split(";\\s");
-                    listOfCookies.addAll(Arrays.asList(fields));
-                }
-            } else
-                break;
+    public void uploadCookies(HttpURLConnection connection){
+        if (cookieManager.getCookieStore().getCookies().size() > 0) {
+            connection.setRequestProperty("Cookie",
+                    String.join(";",  this.toString()));
         }
     }
 
     @Override
     public String toString() {
-        return listOfCookies.toString();
+        List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
+        StringBuilder cookiesStr = new StringBuilder();
+        for (int i = 0; i < cookies.size(); i++) {
+            if (i != 0) cookiesStr.append("; ");
+            cookiesStr.append(cookies.get(i).toString());
+        }
+        return cookiesStr.toString();
     }
 }

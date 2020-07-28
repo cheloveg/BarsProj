@@ -21,11 +21,11 @@ import java.util.Set;
 public class Server {
     private String basicUrl = "https://schools48.ru/";
     private final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36";
-    Cookies cookies;
+    Cookies cookies = new Cookies();
 
-    private String paramsConvertToLine(Map<String, String> params){
+    private String paramsConvertToLine(Map<String, String> params) {
         StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String, String> param : params.entrySet()){
+        for (Map.Entry<String, String> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');
             postData.append(URLEncoder.encode(param.getKey(), Charset.forName("UTF-8")));
             postData.append('=');
@@ -43,21 +43,45 @@ public class Server {
         con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty("Accept", "*/*");
 
-        if (params != null && params.size() != 0){
+        cookies.uploadCookies(con);
+
+        if (params != null && params.size() != 0) {
             con.setDoOutput(true);
-            try(OutputStream os = con.getOutputStream()){
+            try (OutputStream os = con.getOutputStream()) {
                 byte[] input = paramsConvertToLine(params).getBytes(StandardCharsets.UTF_8);
                 os.write(input);
             }
         }
 
-        cookies = new Cookies(con);
+        cookies.catchCookies(con);
 
         int responseCode = con.getResponseCode();
         System.out.println("Sending POST to URL:" + url);
         System.out.println("Response code: " + responseCode);
 
         return con;
+    }
+
+    private HttpURLConnection get(String url, Map<String, String> params) throws IOException {
+        URL obj;
+        if (params != null && params.size() != 0) {
+            obj = new URL(basicUrl + url + "?" + paramsConvertToLine(params));
+        } else
+            obj = new URL(basicUrl + url);
+
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty("Accept", "*/*");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        return con;
+
     }
 
     private JsonObject getJsonResponse(HttpURLConnection connection) throws IOException {
@@ -73,19 +97,29 @@ public class Server {
         }
     }
 
-    public ArrayList<String> authorize(String login, String password) throws IOException {
+    public JsonObject authorize(String login, String password) throws IOException {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("login_login", login);
         params.put("login_password", password);
 
         HttpURLConnection con = this.post("auth/login", params);
 
-        JsonObject jObj = getJsonResponse(con);
-        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();
-        for (Map.Entry<String, JsonElement> entry : entries)
-            System.out.println(entry.getKey() + " " + entry.getValue());
+        //        return getJsonResponse(con); //release
 
+        //-----// test //-----//
+        JsonObject jObj = getJsonResponse(con);// test
+        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
+        for (Map.Entry<String, JsonElement> entry : entries)// test
+            System.out.println(entry.getKey() + " " + entry.getValue());// test
+        return jObj; // test
+    }
 
-        return null;
+    public JsonObject getPersonData() throws IOException {
+        HttpURLConnection con = this.post("api/ProfileService/GetPersonData", null);
+        return getJsonResponse(con);
+    }
+
+    public void startImitation(String[] cookies) {
+        this.cookies.imitationCatchCookies(cookies);
     }
 }
