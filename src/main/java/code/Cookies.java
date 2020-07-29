@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Cookies {
-    static final String COOKIES_HEADER = "Set-Cookie";
-    static CookieManager cookieManager = new CookieManager();
+    private static final String COOKIES_HEADER = "Set-Cookie";
+    private static CookieManager cookieManager = new CookieManager();
 
     public void catchCookies(HttpURLConnection connection) {
         Map<String, List<String>> headerFields = connection.getHeaderFields();
