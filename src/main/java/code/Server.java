@@ -20,7 +20,7 @@ import java.util.Set;
 public class Server {
     private String basicUrl = "https://schools48.ru/";
     private final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36";
-    Cookies cookies = new Cookies();
+    static Cookies cookies = new Cookies();
 
     private String paramsConvertToLine(Map<String, String> params) {
         StringBuilder postData = new StringBuilder();
@@ -55,8 +55,10 @@ public class Server {
         cookies.catchCookies(con);
 
         int responseCode = con.getResponseCode();
-        System.out.println("Sending POST to URL:" + url);
-        System.out.println("Response code: " + responseCode);
+        if (responseCode != 200)
+            throw new IOException();
+//        System.out.println("Sending POST to URL:" + url);
+//        System.out.println("Response code: " + responseCode);
 
         return con;
     }
@@ -100,21 +102,34 @@ public class Server {
         }
     }
 
-    public JsonObject authorize(String login, String password) throws IOException {
+    public boolean checkAuthorize(String login, String password){
+        JsonObject jObj = null;
+        try {
+            jObj = authorize(login, password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (jObj != null && jObj.get("success").getAsBoolean()){
+            return true;
+        } else // TODO обработать бан
+            return false;
+    }
+
+    private JsonObject authorize(String login, String password) throws IOException {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("login_login", login);
         params.put("login_password", password);
 
         HttpURLConnection con = this.post("auth/login", params);
 
-//                return getJsonResponse(con); //release
+        return getJsonResponse(con); //release
 
-        //-----// test //-----//
-        JsonObject jObj = getJsonResponse(con);// test
-        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
-        for (Map.Entry<String, JsonElement> entry : entries)// test
-            System.out.println(entry.getKey() + " " + entry.getValue());// test
-        return jObj; // test
+//        //-----// test //-----//
+//        JsonObject jObj = getJsonResponse(con);// test
+//        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
+//        for (Map.Entry<String, JsonElement> entry : entries)// test
+//            System.out.println(entry.getKey() + " " + entry.getValue());// test
+//        return jObj; // test
     }
 
     public JsonObject getPersonData() throws IOException {

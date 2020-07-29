@@ -24,19 +24,20 @@ public class Main extends Application{
     }
 
     public static void main(String[] args) throws IOException {
-        code.Server server = new code.Server();
+//        code.Server server = new code.Server();
 //        server.authorize("06_uch_01", "yYVZ6UuX");
-        server.startImitation(new String[]{"NodeID=node2;", "sessionid=7hazvjqj1s31lvwzgwdmsvv0uqumjfiw"});
-        JsonObject jObj = server.getPersonData();// test
-        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
-        for (Map.Entry<String, JsonElement> entry : entries)// test
-            System.out.println(entry.getKey() + " " + entry.getValue());// test
+//        server.startImitation(new String[]{"NodeID=node2;", "sessionid=wqn9eeq0iehguv5152y9s42zn550az9u"});
+//        JsonObject jObj = server.getPersonData();// test
+//
+//        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
+//        for (Map.Entry<String, JsonElement> entry : entries)// test
+//            System.out.println(entry.getKey() + " " + entry.getValue());// test
 
 // Работа с массивом JSON
-//        System.out.println(jObj.getAsJsonArray("indicators").get(0).getAsJsonObject().get("name"));
+//        System.out.println(jObj.getAsJsonArray("indicators").get(0).getAsJsonObject().get("value"));
 // Работа с членом JSON
 //        System.out.println(jObj.get("user_fullname").getAsString());
 //        System.out.println(server.cookies);
-//        launch(args);
+        launch(args);
     }
 }
