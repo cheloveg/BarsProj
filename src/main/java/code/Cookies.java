@@ -32,8 +32,7 @@ public class Cookies {
 
     public void uploadCookies(HttpURLConnection connection){
         if (cookieManager.getCookieStore().getCookies().size() > 0) {
-            connection.setRequestProperty("Cookie",
-                    String.join(";",  this.toString()));
+            connection.setRequestProperty("Cookie", this.toString());
         }
     }
 

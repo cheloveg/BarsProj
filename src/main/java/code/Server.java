@@ -75,9 +75,13 @@ public class Server {
         con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         con.setRequestProperty("Accept", "*/*");
 
+        cookies.uploadCookies(con);
+
         int responseCode = con.getResponseCode();
         System.out.println("\nSending 'GET' request to URL : " + url);
         System.out.println("Response Code : " + responseCode);
+
+        cookies.catchCookies(con);
 
         return con;
 
@@ -103,7 +107,7 @@ public class Server {
 
         HttpURLConnection con = this.post("auth/login", params);
 
-        //        return getJsonResponse(con); //release
+//                return getJsonResponse(con); //release
 
         //-----// test //-----//
         JsonObject jObj = getJsonResponse(con);// test
@@ -114,7 +118,7 @@ public class Server {
     }
 
     public JsonObject getPersonData() throws IOException {
-        HttpURLConnection con = this.post("api/ProfileService/GetPersonData", null);
+        HttpURLConnection con = this.get("api/ProfileService/GetPersonData", null);
         return getJsonResponse(con);
     }
 
