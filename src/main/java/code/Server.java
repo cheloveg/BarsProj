@@ -63,7 +63,7 @@ public class Server {
         return con;
     }
 
-    private HttpURLConnection get(String url, Map<String, String> params) throws IOException {
+    public HttpURLConnection get(String url, Map<String, String> params) throws IOException {
         URL obj;
         if (params != null && params.size() != 0) {
             obj = new URL(basicUrl + url + "?" + paramsConvertToLine(params));
@@ -106,13 +106,15 @@ public class Server {
         JsonObject jObj = null;
         try {
             jObj = authorize(login, password);
+            if (jObj != null && jObj.get("success").getAsBoolean()){
+                this.get("/", null);
+                return true;
+            } else // TODO обработать бан
+                return false;
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (jObj != null && jObj.get("success").getAsBoolean()){
-            return true;
-        } else // TODO обработать бан
             return false;
+        }
     }
 
     private JsonObject authorize(String login, String password) throws IOException {

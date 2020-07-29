@@ -25,10 +25,9 @@ public class Main extends Application{
 
     public static void main(String[] args) throws IOException {
 //        code.Server server = new code.Server();
-//        server.authorize("06_uch_01", "yYVZ6UuX");
-//        server.startImitation(new String[]{"NodeID=node2;", "sessionid=wqn9eeq0iehguv5152y9s42zn550az9u"});
+////        server.authorize("06_uch_01", "yYVZ6UuX");
+//        server.startImitation(new String[]{"NodeID=node1", "sessionid=zmkyx03ofq77zf097d4kbp8n1zdvvqp3"});
 //        JsonObject jObj = server.getPersonData();// test
-//
 //        Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
 //        for (Map.Entry<String, JsonElement> entry : entries)// test
 //            System.out.println(entry.getKey() + " " + entry.getValue());// test

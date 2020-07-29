@@ -36,9 +36,6 @@ public class GeneralController {
         JsonObject jObj = null;
         try {
             jObj = server.getPersonData();
-            Set<Map.Entry<String, JsonElement>> entries = jObj.entrySet();// test
-            for (Map.Entry<String, JsonElement> entry : entries)// test
-                System.out.println(entry.getKey() + " " + entry.getValue());// test
         } catch (IOException e) {
             e.printStackTrace();
         }
