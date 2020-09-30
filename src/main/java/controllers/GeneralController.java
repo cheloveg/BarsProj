@@ -1,11 +1,15 @@
 package controllers;
 
 import code.Server;
+import code.Transition;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class GeneralController {
 
@@ -22,6 +26,17 @@ public class GeneralController {
 
     @FXML
     private Text classNameField;
+
+
+    @FXML
+    private Button backGenMenuButton;
+
+    @FXML
+    void backGenMenuClick(MouseEvent event) throws IOException {
+        Transition.hideWindow(backGenMenuButton);
+        URL layout = getClass().getResource("/layouts/general_menu.fxml");
+        Transition.openWindow(layout, true);
+    }
 
     @FXML
     void initialize() {

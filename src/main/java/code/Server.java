@@ -55,8 +55,10 @@ public class Server {
         cookies.catchCookies(con);
 
         int responseCode = con.getResponseCode();
-        if (responseCode != 200)
+        if (responseCode != 200){
+            System.out.println("Ошибка авторизации! Код Http: "+responseCode+"; ");
             throw new IOException();
+        }
 //        System.out.println("Sending POST to URL:" + url);
 //        System.out.println("Response code: " + responseCode);
 
@@ -124,6 +126,8 @@ public class Server {
 
         HttpURLConnection con = this.post("auth/login", params);
 
+        System.out.println(cookies.toString());
+
         return getJsonResponse(con); //release
 
 //        //-----// test //-----//
@@ -136,6 +140,26 @@ public class Server {
 
     public JsonObject getPersonData() throws IOException {
         HttpURLConnection con = this.get("api/ProfileService/GetPersonData", null);
+        return getJsonResponse(con);
+    }
+
+    public JsonObject getTotalMarks(String dateFrom, String dateTo) throws IOException{
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("dateFrom", dateFrom);
+        params.put("dateTo", dateTo);
+
+        HttpURLConnection con = this.get("apt/MarkService/GetTotalMarks", params);
+
+        return getJsonResponse(con);
+    }
+
+    public JsonObject getDiary(String date) throws IOException{
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("date", date);
+        params.put("is_diary", "true");
+
+        HttpURLConnection con = this.get("apt/ScheduleService/GetDiary", params);
+
         return getJsonResponse(con);
     }
 

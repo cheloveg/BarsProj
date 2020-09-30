@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GeneralDiaryController">
+   <children>
+      <DatePicker fx:id="generalDiaryDate" layoutX="106.0" layoutY="45.0" onAction="#generalDiaryDateAct" />
+      <AnchorPane fx:id="generalDiaryMon" layoutX="60.0" layoutY="175.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #cccccc;">
+      </AnchorPane>
+      <AnchorPane fx:id="generalDiaryTus" layoutX="300.0" layoutY="175.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+      <AnchorPane fx:id="generalDiaryWed" layoutX="540.0" layoutY="175.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+      <AnchorPane fx:id="generalDiaryThu" layoutX="780.0" layoutY="175.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+      <AnchorPane fx:id="generalDiaryFri" layoutX="1020.0" layoutY="175.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #cccccc;" />
+      <Text layoutX="118.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Понедельник" />
+      <Text layoutX="374.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вторник" />
+      <Text layoutX="621.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Среда" />
+      <Text layoutX="847.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Четверг" />
+      <Text layoutX="1093.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пятница" />
+   </children>
+</AnchorPane>

@@ -1,8 +1,8 @@
 package controllers;
 
 import code.Server;
-import code.Transition;
 import code.Verificator;
+import code.Transition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -33,9 +33,10 @@ public class SignInController {
     void signInBtClick(MouseEvent event) throws IOException {
         if (Verificator.checkFillTextField(new TextField[]{
                 loginField, passwordField
-        }) && server.checkAuthorize(loginField.getText(), passwordField.getText())) {
+        }) && server.checkAuthorize(loginField.getText(), passwordField.getText())) { //
+            //server.startImitation(new String[]{"NodeID=node1", "sessionid=yu66q8eag7a1jlvub2oidy17khuh4n7o"});
             Transition.hideWindow(signInBt);
-            URL layout = getClass().getResource("/layouts/general_info.fxml");
+            URL layout = getClass().getResource("/layouts/general_menu.fxml");
             Transition.openWindow(layout, true);
         }
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TotalMarksController">
+   <children>
+      <DatePicker fx:id="toTotalMarksDate" layoutX="253.0" layoutY="34.0" promptText="До" />
+      <Button fx:id="showTotalMarksButton" layoutX="475.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#showTotalMarksClick" text="Показать" />
+      <Text fx:id="TotalMarksText" layoutX="75.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выберете даты" />
+      <DatePicker fx:id="fromTotalMarksDate" layoutX="35.0" layoutY="34.0" promptText="От" />
+   </children>
+</AnchorPane>
